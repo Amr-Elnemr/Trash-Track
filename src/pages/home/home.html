@@ -1,14 +1,38 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+<ion-header >
+
+  <ion-navbar hideBackButton color="primary">
+ 	<ion-title>
+		<ion-icon name="home"></ion-icon>
+ 		Home
+ 	</ion-title>
+ 	<ion-buttons end >
+      <button ion-button outline  (click)="logout()">
+      	<h6>Logout</h6>
+      </button>
+    </ion-buttons>
   </ion-navbar>
+
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content padding class="form">
+	<h3>Hi {{ name }},</h3>
+	<p>Please change your state when you are ready.</p>
+	<ion-list>
+		<ion-item>
+		  <ion-label class="state">{{ state }}</ion-label>
+		  <ion-toggle (ionChange)="beAvailable($event)" color="available" checked="false"></ion-toggle>
+		</ion-item>
+	</ion-list>
+	
+	<button 
+		*ngIf="state==='Available'"
+		ion-button 
+		round 
+		(click)="goride()" 
+		class="rideBtn" 
+		icon-left>
+		<ion-icon name="navigate" ></ion-icon>
+      	Start the ride
+    </button>
+
 </ion-content>

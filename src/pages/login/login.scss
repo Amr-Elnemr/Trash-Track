@@ -1,0 +1,15 @@
+page-login {
+	ion-content{
+		background: url('../assets/imgs/bck.png');
+
+	}
+	.form{
+		position: relative;
+		top: 20pt;
+	}
+	
+	.logWarn{
+		color:red;
+		text-align: center;
+	}
+}

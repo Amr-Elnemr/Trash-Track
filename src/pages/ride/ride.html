@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>
+     <ion-icon name="git-merge"></ion-icon>
+ 		On ride
+ 	</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<agm-map 
+		[latitude]="myLat" 
+		[longitude]="myLng"
+		[zoom]="16">
+
+	  <agm-marker 
+	  	[iconUrl]="truck"
+		[latitude]="myLat" 
+		[longitude]="myLng">
+	  </agm-marker>
+
+	  <agm-marker *ngFor="let trash of data"
+	  	[iconUrl] = "getState(trash.state)"
+		[latitude] = "trash.lat" 
+		[longitude] = "trash.lng">
+	  </agm-marker>
+
+
+	<div *ngFor = "let m of myPath">
+	  <agm-direction 
+	  	[renderOptions] = "{suppressMarkers: true}"
+
+	    [origin] =  'm.origin'
+	    [destination] = 'm.destination'>
+	  </agm-direction>
+</div>
+		
+	</agm-map>
+</ion-content>
