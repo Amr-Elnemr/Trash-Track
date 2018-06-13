@@ -1,2 +1,3 @@
 # Trash-Track
-A cross platform Trash-Track application for garbage trucks drivers
+A cross platform client side application for garbage truck drivers.
+It is implemented with Ionic 3. 
