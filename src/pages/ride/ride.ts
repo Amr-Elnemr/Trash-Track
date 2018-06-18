@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams} from 'ionic-angular';
 
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation , Geoposition } from '@ionic-native/geolocation';
 
 
 
@@ -10,16 +10,16 @@ import { Geolocation } from '@ionic-native/geolocation';
   templateUrl: 'ride.html',
 })
 export class RidePage {
-
-	myLat = 30.071538;	//temp
-	myLng = 31.020819;  //temp
+// 29.030391, 31.110125
+	myLat: number = 0;	//temp
+	myLng: number = 0;  //temp
 
 	scale = 35;
 
 	myPath = [];
 
 	constructor(
-		public navCtrl: NavController, 
+		public navCtrl: NavController,
 		public navParams: NavParams,
 		private geolocation: Geolocation,
 		) {
@@ -29,22 +29,36 @@ export class RidePage {
 
 
 
+
 	ionViewDidLoad() {
 
 // ******************** will uncomment after development **************************
-		// console.log(this.geolocation);		
-  //   	this.geolocation.getCurrentPosition()
-  //   	.then((resp) => {
+		// console.log(this.geolocation);
+    // 	this.geolocation.getCurrentPosition()
+    // 	.then((resp) => {
 		// 	this.myLat = resp.coords.latitude;
 		// 	this.myLng = resp.coords.longitude;
 		// 	this.myPath = this.getRoute();
 		// 	console.log(this.myPath)
-
+    //
 		// }).catch((error) => {
 		//   console.log('Error getting location', error);
 		// });
 
 //**********************************************************************************
+
+// track device
+
+let watch = this.geolocation.watchPosition().subscribe(position => {
+    if ((position as Geoposition).coords != undefined) {
+      var geoposition = (position as Geoposition);
+
+      console.log('Latitude: ' + geoposition.coords.latitude + ' - Longitude: ' + geoposition.coords.longitude);
+
+      this.myLat = geoposition.coords.latitude;
+  		this.myLng = geoposition.coords.longitude;
+    } 
+});
 
 // ******************** will uncomment after development **************************
 		this.myPath = this.getRoute();
@@ -96,23 +110,26 @@ export class RidePage {
 		}
 	}
 // ***************** From backend ***************************
+// 29.0643815 ,31.0999373 menton
+// 29.0629273 , 31.1003993 club
+// 29.0619371 , 31.1005927 coffe
 	data = [
 		{
 			id:1,
-			lat: 30.074713,
-			lng: 31.023833,
+			lat: 29.03035819,
+			lng: 31.11001926,
 			state: "empty"
 		},
 		{
 			id:2,
-			lat: 30.074351,
-			lng: 31.019132,
+			lat: 29.02897919,
+			lng: 31.10950428,
 			state: 'med'
 		},
 		{
 			id:3,
-			lat: 30.072436,
-			lng: 31.015542,
+			lat: 29.02886662,
+			lng: 31.11092048,
 			state: 'full'
 		}
 	]
@@ -139,5 +156,3 @@ export class RidePage {
 	}
 
 }
-	
-
