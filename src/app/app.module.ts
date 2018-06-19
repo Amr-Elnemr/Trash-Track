@@ -16,6 +16,7 @@ import { AgmDirectionModule } from 'agm-direction';
 
 import { Geolocation } from '@ionic-native/geolocation';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { HTTP } from '@ionic-native/http';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     StatusService,
     Geolocation,
-    LocationAccuracy
+    LocationAccuracy,
+    HTTP
   ]
 })
 export class AppModule {}
