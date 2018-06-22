@@ -12,6 +12,11 @@ import { HTTP } from '@ionic-native/http';
 })
 export class LoginPage {
   unAuthorised = false;
+
+  ServerState = "";
+
+  // temp2;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -22,9 +27,25 @@ export class LoginPage {
     ) {
   }
 
-  // ionViewDidLoad() {
-  //   console.log('ionViewDidLoad LoginPage');
-  // }
+  ionViewDidEnter() {
+    console.log("Calling ...")
+    // ****************** Get Access ************************
+    this.http.post('http://174.138.125.84/Login', {"username": "Amr_Elnemr", "password": "mot@iti"}, {})
+    .then(data => {
+      console.log(data);
+      // this.ServerState = "Connection established";
+
+    })
+    .catch(error => {
+      console.log(error);
+      console.log("No Access")
+      this.ServerState = "Server Connection Error ! \n try restarting the app or contact the administrator for help.";
+     
+    });
+    // ******************************************************************
+
+  }
+
 
   onLogin(form: NgForm){
     const loggedName = form.form.controls.username.value;
@@ -36,16 +57,16 @@ export class LoginPage {
     loader.present();
     console.log(form);
 
-    //************* Temp *********************************
-    if(loggedName == "driver" && loggedPw == "driver"){ 
-      this.navCtrl.push(HomePage, {userName: loggedName});
-    }
-    else{
-      loader.dismiss();
-      this.unAuthorised = true;
-      console.log("Invalid login")
-    }
-    // ****************************************************
+    // //************* Temp *********************************
+    // if(loggedName == "driver" && loggedPw == "driver"){ 
+    //   this.navCtrl.push(HomePage, {userName: loggedName});
+    // }
+    // else{
+    //   loader.dismiss();
+    //   this.unAuthorised = true;
+    //   console.log("Invalid login")
+    // }
+    // // ****************************************************
 
 
     // // ****************** When server is ready ************************
@@ -63,6 +84,27 @@ export class LoginPage {
      
     // });
     // // ******************************************************************
+    this.http.post('http://174.138.125.84/ExecuteQuerySafe', 
+                  {"query": "SELECT * FROM APPLICATION_40 WHERE name='" + loggedName + "'AND password='" + loggedPw +"'"}, {})
+    .then(Data => {
+      console.log(Data);
+      
+      let loggedData = (Data.data);
+      loggedData = loggedData.replace(/[\[\]']+/g,'');
+      let driverName = JSON.parse(loggedData).name;
+      // this.temp2 = driverName;
+
+      this.navCtrl.push(HomePage, {userName: driverName});
+
+    })
+    .catch(error => {
+      console.log(error.status);
+      loader.dismiss();
+      this.unAuthorised = true;
+      console.log("Invalid login")
+     
+    });
+    
     
   }
 

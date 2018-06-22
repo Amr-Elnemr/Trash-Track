@@ -1,15 +1,40 @@
 page-login {
 	ion-content{
-		background: url('../assets/imgs/bck.png');
+		background: url('../assets/imgs/bg.png');
 
 	}
 	.form{
 		position: relative;
-		top: 20pt;
+		top: 25pt;
+	}
+
+	.inputLabel{
+		color: "dark";
 	}
 	
+	.input{
+		background-color: transparent;
+	}
+
+	.img {
+	    display: block;
+	    margin-left: auto;
+	    margin-right: auto;
+	    width: 50%;
+	}
+
 	.logWarn{
 		color:red;
 		text-align: center;
+		position: relative;
+		top: 30pt;
+	}
+
+	.serverWarn{
+		color:red;
+		text-align: center;
+		position: relative;
+		top: 40pt;
+		text-align: left;
 	}
 }

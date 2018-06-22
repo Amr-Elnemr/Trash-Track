@@ -22,17 +22,17 @@
 		[longitude]="myLng">
 	  </agm-marker>
 
-	  <agm-marker *ngFor="let trash of data"
+	  <agm-marker *ngFor="let trash of data" (markerClick) = "view()"
 	  	[iconUrl] = "getState(trash.state)"
 		[latitude] = "trash.lat" 
-		[longitude] = "trash.lng">
+		[longitude] = "trash.lng"
+		>
 	  </agm-marker>
 
 
 	<div *ngFor = "let m of myPath">
 	  <agm-direction 
 	  	[renderOptions] = "{suppressMarkers: true}"
-
 	    [origin] =  'm.origin'
 	    [destination] = 'm.destination'>
 	  </agm-direction>

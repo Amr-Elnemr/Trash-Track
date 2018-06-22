@@ -1,35 +1,29 @@
-
-<ion-header>
-
-  <ion-navbar color="primary">
-    <ion-title>
-	    <ion-icon name="md-happy"></ion-icon>
-		Welcome!
-	</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding >
-	<h3>Welcome to Trash-Track app</h3>
+	<h2 style="text-align: center;
+	           margin-top: 10pt;
+	           font-style: italic;">
+		Welcome to Trash-Track app
+	</h2>
 
-	<form #f="ngForm" (ngSubmit)="onLogin(f)">
+	<img class="img" src="assets/imgs/iii.png"alt="">
+
+	<form #f="ngForm" (ngSubmit)="onLogin(f)"
+			*ngIf="ServerState === ''">
 		<ion-list class="form">
-		  <ion-item>
-		    <ion-input
+		  <ion-item class="input">
+		  	<ion-label color="dark" floating>Username</ion-label>
+		    <ion-input 
 		    type="text"
-		    placeholder="Username"
 		    name="username"
 		    required
 		    ngModel>
 		    </ion-input>
 		  </ion-item>
 
-		  <ion-item>
+		  <ion-item class="input">
+		  	<ion-label color="dark" floating>Password</ion-label>
 		    <ion-input
 		    type="password"
-		    placeholder="Password"
 		    name="password"
 		    required
 		    ngModel>
@@ -49,6 +43,9 @@
 	</form>
 
 	<p class="logWarn" *ngIf="unAuthorised === true">Username or password is incorrect</p>
+
+
+	<p class="serverWarn">{{ServerState}}</p>
 
 	
 </ion-content>

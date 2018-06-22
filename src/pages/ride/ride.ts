@@ -11,8 +11,11 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 })
 export class RidePage {
 
-	myLat = 30.071538;	//temp
-	myLng = 31.020819;  //temp
+	// myLat = 30.071538;	//temp
+	// myLng = 31.020819;  //temp
+
+	myLat: number;	//temp
+	myLng: number;  //temp
 
 	scale = 35;
 
@@ -32,31 +35,31 @@ export class RidePage {
 	ionViewDidLoad() {
 
 // ******************** will uncomment after development **************************
-		// console.log(this.geolocation);		
-  //   	this.geolocation.getCurrentPosition()
-  //   	.then((resp) => {
-		// 	this.myLat = resp.coords.latitude;
-		// 	this.myLng = resp.coords.longitude;
-		// 	this.myPath = this.getRoute();
-		// 	console.log(this.myPath)
+		console.log(this.geolocation);		
+    	this.geolocation.getCurrentPosition()
+    	.then((resp) => {
+			this.myLat = resp.coords.latitude;
+			this.myLng = resp.coords.longitude;
+			this.myPath = this.getRoute();
+			console.log(this.myPath)
 
-		// }).catch((error) => {
-		//   console.log('Error getting location', error);
-		// });
+		}).catch((error) => {
+		  console.log('Error getting location', error);
+		});
 
 
-// track device
+		// track device
 
-let watch = this.geolocation.watchPosition().subscribe(position => {
-    if ((position as Geoposition).coords != undefined) {
-      var geoposition = (position as Geoposition);
+		let watch = this.geolocation.watchPosition().subscribe(position => {
+		    if ((position as Geoposition).coords != undefined) {
+		      var geoposition = (position as Geoposition);
 
-      console.log('Latitude: ' + geoposition.coords.latitude + ' - Longitude: ' + geoposition.coords.longitude);
+		      console.log('Latitude: ' + geoposition.coords.latitude + ' - Longitude: ' + geoposition.coords.longitude);
 
-      this.myLat = geoposition.coords.latitude;
-      this.myLng = geoposition.coords.longitude;
-    } 
-});
+		      this.myLat = geoposition.coords.latitude;
+		      this.myLng = geoposition.coords.longitude;
+		    } 
+		});
 
 //**********************************************************************************
 
@@ -67,7 +70,7 @@ let watch = this.geolocation.watchPosition().subscribe(position => {
 	}
 
 	truck = {
-		url: '../../assets/imgs/truck.svg',
+		url: 'assets/imgs/truck.svg',
         scaledSize: {
         	width: this.scale+10,
         	height: this.scale+10
@@ -75,7 +78,7 @@ let watch = this.geolocation.watchPosition().subscribe(position => {
 	}
 
 	empty = {
-		url: '../../assets/imgs/empty.svg',
+		url: 'assets/imgs/empty.svg',
         scaledSize: {
         	width: this.scale,
         	height: this.scale
@@ -83,7 +86,7 @@ let watch = this.geolocation.watchPosition().subscribe(position => {
 	}
 
 	med = {
-		url: '../../assets/imgs/med.svg',
+		url: 'assets/imgs/med.svg',
         scaledSize: {
         	width: this.scale,
         	height: this.scale
@@ -91,7 +94,7 @@ let watch = this.geolocation.watchPosition().subscribe(position => {
 	}
 
 	full = {
-		url: '../../assets/imgs/full.svg',
+		url: 'assets/imgs/full.svg',
         scaledSize: {
         	width: this.scale,
         	height: this.scale
@@ -150,6 +153,10 @@ let watch = this.geolocation.watchPosition().subscribe(position => {
 		}
 
 		return mData;
+	}
+
+	view(){
+		console.log("marker clicked")
 	}
 
 }
