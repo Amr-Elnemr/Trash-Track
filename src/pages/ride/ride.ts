@@ -56,7 +56,8 @@ export class RidePage {
 
 		// track device
 
-		let watch = this.geolocation.watchPosition().subscribe(position => {
+		let watch = this.geolocation.watchPosition({ maximumAge: 0, timeout: 5000, enableHighAccuracy: true })
+		.subscribe(position => {
 		    if ((position as Geoposition).coords != undefined) {
 		      var geoposition = (position as Geoposition);
 
