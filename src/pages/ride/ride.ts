@@ -10,7 +10,6 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation';
   templateUrl: 'ride.html',
 })
 export class RidePage {
-
 	// myLat = 30.071538;	//temp
 	// myLng = 31.020819;  //temp
 
@@ -19,7 +18,9 @@ export class RidePage {
 
 	scale = 35;
 
-	myPath = [];
+	myPath;
+
+	binsData;
 
 	constructor(
 		public navCtrl: NavController, 
@@ -27,6 +28,11 @@ export class RidePage {
 		private geolocation: Geolocation,
 		) {
 
+	}
+
+	ngOnInit(){
+		this.binsData = this.navParams.get('path');
+		console.log(this.binsData);
 	}
 
 
@@ -40,7 +46,7 @@ export class RidePage {
     	.then((resp) => {
 			this.myLat = resp.coords.latitude;
 			this.myLng = resp.coords.longitude;
-			this.myPath = this.getRoute();
+			this.myPath = this.getRoute(this.binsData);
 			console.log(this.myPath)
 
 		}).catch((error) => {
@@ -63,9 +69,9 @@ export class RidePage {
 
 //**********************************************************************************
 
-// ******************** will uncomment after development **************************
-		this.myPath = this.getRoute();
-		console.log(this.myPath)
+// ******************** will remove after development **************************
+		// this.myPath = this.getRoute();
+		// console.log(this.myPath)
 //**********************************************************************************
 	}
 
@@ -112,42 +118,42 @@ export class RidePage {
 		        return this.full;
 		}
 	}
-// ***************** From backend ***************************
-	data = [
-		{
-			id:1,
-			lat: 30.074713,
-			lng: 31.023833,
-			state: "empty"
-		},
-		{
-			id:2,
-			lat: 30.074351,
-			lng: 31.019132,
-			state: 'med'
-		},
-		{
-			id:3,
-			lat: 30.072436,
-			lng: 31.015542,
-			state: 'full'
-		}
-	]
+// ***************** From backend (comment after connecting) ***************************
+	// data = [
+	// 	{
+	// 		id:1,
+	// 		lat: 30.074713,
+	// 		lng: 31.023833,
+	// 		state: "empty"
+	// 	},
+	// 	{
+	// 		id:2,
+	// 		lat: 30.074351,
+	// 		lng: 31.019132,
+	// 		state: 'med'
+	// 	},
+	// 	{
+	// 		id:3,
+	// 		lat: 30.072436,
+	// 		lng: 31.015542,
+	// 		state: 'full'
+	// 	}
+	// ]
 
 // ******************************************************
 
-	getRoute(){
+	getRoute(data){
 		let mData = [];
 		let tempObj = {
 			origin: {lat: this.myLat, lng: this.myLng},
-			destination: {lat: this.data[0].lat, lng: this.data[0].lng}
+			destination: {lat: data[0].lat, lng: data[0].lng}
 		}
 		mData.push(tempObj);
 
-		for (var i=0; i<this.data.length-1; i++){
+		for (var i=0; i<data.length-1; i++){
 			tempObj = {
-				origin: {lat: this.data[i].lat, lng: this.data[i].lng},
-				destination: {lat: this.data[i+1].lat, lng: this.data[i+1].lng}
+				origin: {lat: data[i].lat, lng: data[i].lng},
+				destination: {lat: data[i+1].lat, lng: data[i+1].lng}
 			}
 			mData.push(tempObj);
 		}

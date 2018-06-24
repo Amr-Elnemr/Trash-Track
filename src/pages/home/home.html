@@ -25,7 +25,7 @@
 	</ion-list>
 	
 	<button 
-		*ngIf="state==='Available'"
+		*ngIf="rideReady === true"
 		ion-button 
 		round 
 		(click)="goride()" 

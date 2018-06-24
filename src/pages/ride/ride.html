@@ -22,7 +22,7 @@
 		[longitude]="myLng">
 	  </agm-marker>
 
-	  <agm-marker *ngFor="let trash of data" (markerClick) = "view()"
+	  <agm-marker *ngFor="let trash of binsData" (markerClick) = "view()"
 	  	[iconUrl] = "getState(trash.state)"
 		[latitude] = "trash.lat" 
 		[longitude] = "trash.lng"
