@@ -34,6 +34,13 @@
 		<ion-icon name="navigate" ></ion-icon>
       	Start the ride
     </button>
+	
+	<figure *ngIf="state === 'Available' && rideReady === false">
+	    <img class="img" src="assets/imgs/load.gif"alt="">
+		<figcaption class="caption">
+			<h4><i>Loading your ride</i></h4>
+		</figcaption>
+	</figure>
 
 
 </ion-content>
