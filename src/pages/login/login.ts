@@ -21,8 +21,6 @@ export class LoginPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
-    // public signinService: SigninService,
-
     public http: HTTP
     ) {
   }
@@ -69,7 +67,7 @@ export class LoginPage {
     // // ****************************************************
 
 
-    // // ****************** When server is ready ************************
+    // // ************** Connection test to postman mock server ***************
     // this.http.post('https://9689764e-901e-45ee-8ea4-8ea022346c8f.mock.pstmn.io/login', {"name": "driver", "password": "driver"}, {})
     // .then(data => {
     //   console.log(data);
@@ -92,9 +90,10 @@ export class LoginPage {
       let loggedData = (Data.data);
       loggedData = loggedData.replace(/[\[\]']+/g,'');
       let driverName = JSON.parse(loggedData).name;
+      let driverId = JSON.parse(loggedData).driver_id;
       // this.temp2 = driverName;
 
-      this.navCtrl.push(HomePage, {userName: driverName});
+      this.navCtrl.push(HomePage, {userName: driverName, userId: driverId});
 
     })
     .catch(error => {

@@ -12,7 +12,8 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
 })
 export class HomePage {
 	state = "Offline";
-  public name;
+  public name
+  public id;
   pathData ;
   rideReady = false;
   _self = this;
@@ -28,7 +29,8 @@ export class HomePage {
   }
 
   ngOnInit(){
-    this.name = this.navParams.get('userName');  
+    this.name = this.navParams.get('userName'); 
+    this.id = this.navParams.get('userId'); 
   }
 
   // ionViewDidLoad() {
@@ -52,8 +54,8 @@ export class HomePage {
       classObj.state = "Available";
 
       client.on('connect', function () {
-        client.subscribe('driver/route')
-        console.log("ready...")
+        client.subscribe('driver/' + classObj.id +'/route')
+        console.log("Waiting for topic...")
       });
      
       client.on('message', function (topic, message) {
@@ -63,7 +65,7 @@ export class HomePage {
           console.log(classObj.pathData);
           classObj.pathData = JSON.parse(classObj.pathData);
           console.log(classObj.pathData);
-          client.unsubscribe('driver/route')
+          client.unsubscribe('driver/' + classObj.id +'/route')
           client.end(true)
         }
       });
@@ -72,7 +74,7 @@ export class HomePage {
   		this.statusService.setUnavailable;
   		this.state = "Offline";
       classObj.rideReady = false;
-      client.unsubscribe('driver/route')
+      client.unsubscribe('driver/' + classObj.id +'/route')
       client.end(true)
       console.log("Connection closed")
 
@@ -94,7 +96,7 @@ export class HomePage {
                 () => {
                         loader.dismiss();
                         console.log('Request successful'); 
-                        this.navCtrl.push(RidePage, {path: this.pathData});
+                        this.navCtrl.push(RidePage, {path: this.pathData, userId: this.id});
                       },
                 error =>  {
                             loader.dismiss();
@@ -106,7 +108,7 @@ export class HomePage {
     }
     else{
       loader.dismiss();
-      this.navCtrl.push(RidePage, {path: this.pathData});
+      this.navCtrl.push(RidePage, {path: this.pathData, userId: this.id});
     }
     
   }

@@ -13,6 +13,8 @@ export class RidePage {
 	// myLat = 30.071538;	//temp
 	// myLng = 31.020819;  //temp
 
+	_self = this;
+
 	myLat: number;	//temp
 	myLng: number;  //temp
 
@@ -20,27 +22,25 @@ export class RidePage {
 
 	myPath;
 
-	binsData;
+	public id;
+	public binsData;
 
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
 		private geolocation: Geolocation,
-		) {
-
-	}
+		) {}
 
 	ngOnInit(){
 		this.binsData = this.navParams.get('path');
 		console.log(this.binsData);
+		this.id = this.navParams.get('userId');
 	}
 
-
-
-
 	ionViewDidLoad() {
+		let myobj = this._self;
+		// Get position:
 
-// ******************** will uncomment after development **************************
 		console.log(this.geolocation);		
     	this.geolocation.getCurrentPosition()
     	.then((resp) => {
@@ -54,17 +54,26 @@ export class RidePage {
 		});
 
 
-		// track device
-
+		// Track device"
 		let watch = this.geolocation.watchPosition({ maximumAge: 0, timeout: 5000, enableHighAccuracy: true })
 		.subscribe(position => {
 		    if ((position as Geoposition).coords != undefined) {
-		      var geoposition = (position as Geoposition);
+		    	var geoposition = (position as Geoposition);
 
-		      console.log('Latitude: ' + geoposition.coords.latitude + ' - Longitude: ' + geoposition.coords.longitude);
+		      	console.log('Latitude: ' + geoposition.coords.latitude + ' - Longitude: ' + geoposition.coords.longitude);
 
-		      this.myLat = geoposition.coords.latitude;
-		      this.myLng = geoposition.coords.longitude;
+		     	this.myLat = geoposition.coords.latitude;
+		     	this.myLng = geoposition.coords.longitude;
+
+		      	let mqtt = require('mqtt');
+		      	let options = { host: "test.mosquitto.org", port: 8080 };
+		      	let client  = mqtt.connect(options);
+		      	let dLocation = {dLat:this.myLat, dLng: this.myLng};
+
+		      	client.on('connect', function () {
+					client.publish('driver/' + myobj.id + '/location', JSON.stringify(dLocation))
+					console.log(JSON.stringify(dLocation));
+				})
 		    } 
 		});
 
